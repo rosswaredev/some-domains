@@ -1,11 +1,14 @@
-import { reportUnusedDisableDirectives } from "@/.eslintrc.cjs";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { getRandomPlaceholder } from "~/utils/getRandomIdeaPlaceholder";
+import { Alert } from "./ui/Alert";
 import { Button, ButtonProps } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 
-const MIN_IDEA_LENGTH = 25;
+const MAX_IDEA_LENGTH = 200;
+const MIN_WORD_LENGTH = 3;
+
+const wordCount = (text: string) => text.split(" ").length;
 
 type IdeaInputProps = {
   isLoading?: boolean;
@@ -25,6 +28,11 @@ export const IdeaInput = ({
   }, []);
 
   const handleChangeIdeaText = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    if (event.target.value.length > MAX_IDEA_LENGTH) {
+      setErrorMessage(`Enter less than ${MAX_IDEA_LENGTH} characters.`);
+      return;
+    }
+
     setErrorMessage(null);
     setIdeaInputText(event.target.value);
   };
@@ -37,13 +45,15 @@ export const IdeaInput = ({
       return;
     }
 
-    if (ideasInputText.length < MIN_IDEA_LENGTH) {
-      setErrorMessage(`Please tell me a little more`);
+    if (wordCount(ideasInputText) < MIN_WORD_LENGTH) {
+      setErrorMessage(`Enter at least 3 words.`);
       return;
     }
 
     onSubmit(ideasInputText);
   };
+
+  const isButtonDisabled = disabled || !!errorMessage || isLoading;
 
   return (
     <>
@@ -52,12 +62,8 @@ export const IdeaInput = ({
         value={ideasInputText}
         onChange={handleChangeIdeaText}
       />
-      {errorMessage ? (
-        <div>
-          <p className="text-red-500">{errorMessage}</p>
-        </div>
-      ) : null}
-      <Button onClick={handleSubmit} disabled={disabled}>
+      {errorMessage ? <Alert.Warning>{errorMessage}</Alert.Warning> : null}
+      <Button onClick={handleSubmit} disabled={isButtonDisabled}>
         Get Some Domains
         {isLoading ? (
           <Loader2 className="ml-2 h-4 w-4 animate-spin" />

@@ -1,16 +1,12 @@
-import { ArrowRight, ChevronRight, Loader2 } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { type NextPage } from "next";
-import { ChangeEvent, PropsWithChildren, useEffect, useState } from "react";
 import { IdeaInput } from "~/components/IdeaInput";
 
 import { Layout } from "~/components/layout";
-import { Button } from "~/components/ui/button";
 import { H3 } from "~/components/ui/h3";
 import { List } from "~/components/ui/list";
 import { Separator } from "~/components/ui/separator";
-import { Textarea } from "~/components/ui/textarea";
 import { api } from "~/utils/api";
-import { getRandomPlaceholder } from "~/utils/getRandomIdeaPlaceholder";
 
 const Home: NextPage = () => {
   const suggestions = api.suggestions.list.useMutation();
