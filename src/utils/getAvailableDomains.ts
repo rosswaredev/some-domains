@@ -30,15 +30,12 @@ const doesWhoisTextIndicateDomainIsAvailable = (whoisText: string) =>
   whoisText.includes(`no data found`) ||
   whoisText.includes(`no match for`) ||
   whoisText.includes(`domain not found`) ||
-  whoisText.includes(`for more information`) ||
   whoisText.includes(`no entries found`);
 
 const getDomainAvailability = async (domain: string): Promise<boolean> => {
   const domainWhois = await whoiser(domain, { follow: 1 });
   const firstDomainWhois = firstResult(domainWhois);
   const firstTextLine = firstLineText(firstDomainWhois);
-
-  console.log({ firstTextLine });
 
   return doesWhoisTextIndicateDomainIsAvailable(firstTextLine);
 };
