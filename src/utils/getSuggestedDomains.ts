@@ -1,19 +1,25 @@
 import { OpenAIApi, Configuration } from "openai";
+import { z } from "zod";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
+const domainsScema = z.string().url();
+
 const parseDomainCompletions = (completionsContent: string): string[] => {
   const lines = completionsContent.split("\n");
-  return lines
+  const sanitizedDomains = lines
     .map((line) => {
       const name = line.split(" ")[1];
       if (!name) return "";
       return name.trim().toLocaleLowerCase();
     })
-    .filter((line) => line.length > 0);
+    .filter((line) => line.length > 0)
+    .filter((line) => domainsScema.safeParse(line).success);
+
+  return sanitizedDomains;
 };
 
 export const getDomainCompletions = async (idea: string): Promise<string> => {
@@ -39,5 +45,6 @@ export const getDomainCompletions = async (idea: string): Promise<string> => {
 
 export const getSuggestedDomains = async (idea: string): Promise<string[]> => {
   const domainCompletions = await getDomainCompletions(idea);
+  console.log({ domainCompletions });
   return parseDomainCompletions(domainCompletions);
 };

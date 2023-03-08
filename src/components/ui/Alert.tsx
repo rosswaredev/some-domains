@@ -1,3 +1,8 @@
+import {
+  AlertTriangle,
+  LucideAlertTriangle,
+  LucideFileWarning,
+} from "lucide-react";
 import { PropsWithChildren } from "react";
 
 export const Alert = {
@@ -6,7 +11,10 @@ export const Alert = {
       className="relative rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700"
       role="alert"
     >
-      <span className="block sm:inline">{children}</span>
+      <span className="flex">
+        <AlertTriangle />
+        <p className="ml-3">{children}</p>
+      </span>
     </div>
   ),
   Warning: ({ children }: PropsWithChildren<unknown>) => (
@@ -14,7 +22,10 @@ export const Alert = {
       className="relative rounded border border-yellow-400 bg-yellow-100 px-4 py-3 text-yellow-700"
       role="alert"
     >
-      <span className="block sm:inline">{children}</span>
+      <span className="flex">
+        <AlertTriangle />
+        <p className="ml-3">{children}</p>
+      </span>
     </div>
   ),
 };
