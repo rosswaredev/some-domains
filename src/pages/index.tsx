@@ -1,4 +1,4 @@
-import { Loader2 } from "lucide-react";
+import { ArrowRight, ChevronRight, Loader2 } from "lucide-react";
 import { type NextPage } from "next";
 import { ChangeEvent, useState } from "react";
 
@@ -9,24 +9,29 @@ import { Separator } from "~/components/ui/separator";
 import { Textarea } from "~/components/ui/textarea";
 import { api } from "~/utils/api";
 
+const MIN_IDEA_LENGTH = 25;
+
 const Home: NextPage = () => {
   const suggestions = api.suggestions.list.useMutation();
   const [ideasInputText, setIdeaInputText] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleChangeIdeaText = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setErrorMessage(null);
     setIdeaInputText(event.target.value);
   };
 
   const handleGetDomains = async () => {
+    if (ideasInputText.length < MIN_IDEA_LENGTH) {
+      setErrorMessage(`Please tell me a little more`);
+      return;
+    }
+
     await suggestions.mutateAsync(ideasInputText);
   };
 
   const isButtonDisabled = suggestions.isLoading;
   const isIdeasInputDisabled = suggestions.isLoading || !!suggestions.data;
-
-  const buttonText = !!suggestions.data
-    ? "Regenerate Domains"
-    : "Get Some Domains";
 
   return (
     <Layout>
@@ -40,20 +45,28 @@ const Home: NextPage = () => {
               placeholder="I wanna build and app that..."
               value={ideasInputText}
               onChange={handleChangeIdeaText}
-              disabled={isIdeasInputDisabled}
             />
+            {errorMessage ? (
+              <div>
+                <p className="text-red-500">{errorMessage}</p>
+              </div>
+            ) : null}
             <Button onClick={handleGetDomains} disabled={isButtonDisabled}>
+              Get Some Domains
               {suggestions.isLoading ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className="ml-2 h-4 w-4 animate-spin" />
               ) : (
-                buttonText
+                <ArrowRight className="ml-2 h-4 w-4" />
               )}
             </Button>
             {suggestions.data && !suggestions.isLoading ? (
-              <div className="rounded-md border px-3">
+              <div className="animate-fade-in rounded-md border px-3">
                 {suggestions.data.map((suggestion, index) => (
-                  <div>
-                    <p className="my-3">{suggestion}</p>
+                  <div key={suggestion}>
+                    <div className="my-3 flex justify-between">
+                      <p className="">{suggestion}</p>
+                      <ChevronRight />
+                    </div>
                     {index < suggestions.data.length - 1 ? <Separator /> : null}
                   </div>
                 ))}

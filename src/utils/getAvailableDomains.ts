@@ -26,17 +26,27 @@ const firstLineText = (
   return "";
 };
 
+const doesWhoisTextIndicateDomainIsAvailable = (whoisText: string) =>
+  whoisText.includes(`no data found`) ||
+  whoisText.includes(`no match for`) ||
+  whoisText.includes(`domain not found`) ||
+  whoisText.includes(`for more information`) ||
+  whoisText.includes(`no entries found`);
+
 const getDomainAvailability = async (domain: string): Promise<boolean> => {
   const domainWhois = await whoiser(domain, { follow: 1 });
   const firstDomainWhois = firstResult(domainWhois);
   const firstTextLine = firstLineText(firstDomainWhois);
 
-  return firstTextLine.includes(`domain not found`);
+  console.log({ firstTextLine });
+
+  return doesWhoisTextIndicateDomainIsAvailable(firstTextLine);
 };
 
 export const getAvailableDomains = async (domains: string[]) => {
   const domainAvailabilityResults = await Promise.all(
     domains.map((domain) => getDomainAvailability(domain))
   );
+  console.log(domainAvailabilityResults);
   return domains.filter((_, index) => domainAvailabilityResults[index]);
 };
