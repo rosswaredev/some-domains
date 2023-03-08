@@ -45,6 +45,5 @@ export const getDomainCompletions = async (idea: string): Promise<string> => {
 
 export const getSuggestedDomains = async (idea: string): Promise<string[]> => {
   const domainCompletions = await getDomainCompletions(idea);
-  console.log({ domainCompletions });
   return parseDomainCompletions(domainCompletions);
 };

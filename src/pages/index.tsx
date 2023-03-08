@@ -23,6 +23,7 @@ const Home: NextPage = () => {
         <main>
           <div className="grid w-full gap-2">
             <IdeaInput
+              isLoading={suggestions.isLoading}
               disabled={suggestions.isLoading}
               onSubmit={handleGetDomains}
             />

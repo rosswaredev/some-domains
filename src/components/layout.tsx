@@ -2,6 +2,7 @@ import { PropsWithChildren } from "react";
 import { Inter as FontSans } from "@next/font/google";
 
 import { cn } from "@/lib/utils";
+import Head from "next/head";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -18,6 +19,13 @@ export function Layout({ children }: PropsWithChildren) {
       )}
       suppressHydrationWarning
     >
+      <Head>
+        <title>My page title</title>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        ></meta>
+      </Head>
       {children}
     </div>
   );
