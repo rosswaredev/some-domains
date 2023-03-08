@@ -20,11 +20,12 @@ export function Layout({ children }: PropsWithChildren) {
       suppressHydrationWarning
     >
       <Head>
-        <title>My page title</title>
+        <title>Some Domains</title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1"
-        ></meta>
+        />
+        <link rel="shortcut icon" href="/favicon.png" />
       </Head>
       {children}
     </div>
