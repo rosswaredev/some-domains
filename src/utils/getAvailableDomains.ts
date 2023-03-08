@@ -44,6 +44,5 @@ export const getAvailableDomains = async (domains: string[]) => {
   const domainAvailabilityResults = await Promise.all(
     domains.map((domain) => getDomainAvailability(domain))
   );
-  console.log(domainAvailabilityResults);
   return domains.filter((_, index) => domainAvailabilityResults[index]);
 };

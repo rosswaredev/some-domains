@@ -10,7 +10,6 @@ export const suggestionsRouter = createTRPCRouter({
     .output(z.array(z.string()))
     .mutation(async ({ input }) => {
       const domainCompletions = await getSuggestedDomains(input);
-      console.log(domainCompletions);
       return await getAvailableDomains(domainCompletions);
     }),
 });
