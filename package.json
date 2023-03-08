@@ -26,6 +26,7 @@
     "superjson": "1.9.1",
     "tailwind-merge": "^1.10.0",
     "tailwindcss-animate": "^1.0.5",
+    "whoiser": "^1.16.0",
     "zod": "^3.20.6"
   },
   "devDependencies": {

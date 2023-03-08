@@ -2139,7 +2139,7 @@ prop-types@^15.8.1:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-punycode@^2.1.0:
+punycode@^2.1.0, punycode@^2.1.1:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.3.0.tgz#f67fa67c94da8f4d0cfff981aee4118064199b8f"
   integrity sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==
@@ -2604,6 +2604,13 @@ which@^2.0.1:
   integrity sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==
   dependencies:
     isexe "^2.0.0"
+
+whoiser@^1.16.0:
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/whoiser/-/whoiser-1.16.0.tgz#c16e9eb03ef23da699ee64420050adf3174b327b"
+  integrity sha512-bO75zkColwjMz7eLOfa0Vcps1IaXlQGFJ0OaGXMvh37/aIKHHv4kJvNlfIo7qHfBt5he8SDWZVULOoGHs0XnOg==
+  dependencies:
+    punycode "^2.1.1"
 
 word-wrap@^1.2.3:
   version "1.2.3"
