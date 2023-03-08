@@ -1,11 +1,10 @@
-import { ChevronRight } from "lucide-react";
 import { type NextPage } from "next";
 import { IdeaInput } from "~/components/IdeaInput";
 
 import { Layout } from "~/components/layout";
+import { SuggestionsList } from "~/components/suggestions-list";
+import { Alert } from "~/components/ui/Alert";
 import { H3 } from "~/components/ui/h3";
-import { List } from "~/components/ui/list";
-import { Separator } from "~/components/ui/separator";
 import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
@@ -28,19 +27,13 @@ const Home: NextPage = () => {
               onSubmit={handleGetDomains}
             />
             {suggestions.data && !suggestions.isLoading ? (
-              <List>
-                {suggestions.data.map((suggestion, index) => (
-                  <>
-                    <List.Item
-                      href={`https://porkbun.com/checkout/search?q=${suggestion}`}
-                    >
-                      {suggestion}
-                      <ChevronRight />
-                    </List.Item>
-                    {index < suggestions.data.length - 1 ? <Separator /> : null}
-                  </>
-                ))}
-              </List>
+              <SuggestionsList suggestions={suggestions.data} />
+            ) : null}
+            {suggestions.error ? (
+              <Alert.Error>Something went wrong :(</Alert.Error>
+            ) : null}
+            {suggestions.data && suggestions.data.length === 0 ? (
+              <Alert.Warning>Please rethink that idea</Alert.Warning>
             ) : null}
           </div>
         </main>
