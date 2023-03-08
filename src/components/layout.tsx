@@ -11,15 +11,14 @@ const fontSans = FontSans({
 
 export function Layout({ children }: PropsWithChildren) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "min-h-screen bg-white font-sans text-slate-900 antialiased dark:bg-slate-900 dark:text-slate-50",
-          fontSans.variable
-        )}
-      >
-        {children}
-      </body>
-    </html>
+    <div
+      className={cn(
+        "min-h-screen bg-white font-sans text-slate-900 antialiased dark:bg-slate-900 dark:text-slate-50",
+        fontSans.variable
+      )}
+      suppressHydrationWarning
+    >
+      {children}
+    </div>
   );
 }
