@@ -1,39 +1,23 @@
 import { ArrowRight, ChevronRight, Loader2 } from "lucide-react";
 import { type NextPage } from "next";
-import { useRouter } from "next/router";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, PropsWithChildren, useEffect, useState } from "react";
+import { IdeaInput } from "~/components/IdeaInput";
 
 import { Layout } from "~/components/layout";
 import { Button } from "~/components/ui/button";
 import { H3 } from "~/components/ui/h3";
+import { List } from "~/components/ui/list";
 import { Separator } from "~/components/ui/separator";
 import { Textarea } from "~/components/ui/textarea";
 import { api } from "~/utils/api";
-
-const MIN_IDEA_LENGTH = 25;
+import { getRandomPlaceholder } from "~/utils/getRandomIdeaPlaceholder";
 
 const Home: NextPage = () => {
-  const router = useRouter();
   const suggestions = api.suggestions.list.useMutation();
-  const [ideasInputText, setIdeaInputText] = useState("");
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleChangeIdeaText = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setErrorMessage(null);
-    setIdeaInputText(event.target.value);
+  const handleGetDomains = async (idea: string) => {
+    await suggestions.mutateAsync(idea);
   };
-
-  const handleGetDomains = async () => {
-    if (ideasInputText.length < MIN_IDEA_LENGTH) {
-      setErrorMessage(`Please tell me a little more`);
-      return;
-    }
-
-    await suggestions.mutateAsync(ideasInputText);
-  };
-
-  const isButtonDisabled = suggestions.isLoading;
-  const isIdeasInputDisabled = suggestions.isLoading || !!suggestions.data;
 
   return (
     <Layout>
@@ -43,42 +27,24 @@ const Home: NextPage = () => {
         </header>
         <main>
           <div className="grid w-full gap-2">
-            <Textarea
-              placeholder="I wanna build and app that..."
-              value={ideasInputText}
-              onChange={handleChangeIdeaText}
+            <IdeaInput
+              disabled={suggestions.isLoading}
+              onSubmit={handleGetDomains}
             />
-            {errorMessage ? (
-              <div>
-                <p className="text-red-500">{errorMessage}</p>
-              </div>
-            ) : null}
-            <Button onClick={handleGetDomains} disabled={isButtonDisabled}>
-              Get Some Domains
-              {suggestions.isLoading ? (
-                <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-              ) : (
-                <ArrowRight className="ml-2 h-4 w-4" />
-              )}
-            </Button>
             {suggestions.data && !suggestions.isLoading ? (
-              <div className="animate-fade-in rounded-md border">
+              <List>
                 {suggestions.data.map((suggestion, index) => (
-                  <div key={suggestion} className="cursor-pointer">
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
+                  <>
+                    <List.Item
                       href={`https://porkbun.com/checkout/search?q=${suggestion}`}
                     >
-                      <div className="flex justify-between p-3 hover:opacity-70">
-                        <p className="">{suggestion}</p>
-                        <ChevronRight />
-                      </div>
-                    </a>
+                      {suggestion}
+                      <ChevronRight />
+                    </List.Item>
                     {index < suggestions.data.length - 1 ? <Separator /> : null}
-                  </div>
+                  </>
                 ))}
-              </div>
+              </List>
             ) : null}
           </div>
         </main>
