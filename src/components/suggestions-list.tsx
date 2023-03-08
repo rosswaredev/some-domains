@@ -8,6 +8,7 @@ export const SuggestionsList = ({ suggestions }: { suggestions: string[] }) => {
       {suggestions.map((suggestion, index) => (
         <>
           <ListItem
+            key={suggestion}
             href={`https://porkbun.com/checkout/search?q=${suggestion}`}
           >
             {suggestion}

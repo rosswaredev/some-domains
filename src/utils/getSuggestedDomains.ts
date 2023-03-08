@@ -17,7 +17,7 @@ const parseDomainCompletions = (completionsContent: string): string[] => {
       return name.trim().toLocaleLowerCase();
     })
     .filter((line) => line.length > 0)
-    .filter((line) => domainsScema.safeParse(line).success);
+    .filter((line) => domainsScema.safeParse(`https://${line}`).success);
 
   return sanitizedDomains;
 };
