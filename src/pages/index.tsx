@@ -10,8 +10,8 @@ import { api } from "~/utils/api";
 const Home: NextPage = () => {
   const suggestions = api.suggestions.list.useMutation();
 
-  const handleGetDomains = async (idea: string) => {
-    await suggestions.mutateAsync(idea);
+  const handleGetDomains = (idea: string) => {
+    void suggestions.mutateAsync(idea);
   };
 
   return (

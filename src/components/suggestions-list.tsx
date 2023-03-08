@@ -1,5 +1,5 @@
 import { ChevronRight } from "lucide-react";
-import { List } from "./ui/list";
+import { List, ListItem } from "./ui/list";
 import { Separator } from "./ui/separator";
 
 export const SuggestionsList = ({ suggestions }: { suggestions: string[] }) => {
@@ -7,12 +7,12 @@ export const SuggestionsList = ({ suggestions }: { suggestions: string[] }) => {
     <List>
       {suggestions.map((suggestion, index) => (
         <>
-          <List.Item
+          <ListItem
             href={`https://porkbun.com/checkout/search?q=${suggestion}`}
           >
             {suggestion}
             <ChevronRight />
-          </List.Item>
+          </ListItem>
           {index < suggestions.length - 1 ? <Separator /> : null}
         </>
       ))}

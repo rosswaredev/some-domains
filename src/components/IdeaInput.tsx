@@ -1,8 +1,8 @@
 import { ArrowRight, Loader2 } from "lucide-react";
-import { ChangeEvent, useEffect, useState } from "react";
+import { type ChangeEvent, useEffect, useState } from "react";
 import { getRandomPlaceholder } from "~/utils/getRandomIdeaPlaceholder";
 import { Alert } from "./ui/Alert";
-import { Button, ButtonProps } from "./ui/button";
+import { Button, type ButtonProps } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 
 const MAX_IDEA_LENGTH = 200;

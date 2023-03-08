@@ -6,7 +6,10 @@ export const List = ({ children }: PropsWithChildren<unknown>) => (
   </div>
 );
 
-List.Item = ({ children, href }: PropsWithChildren<{ href: string }>) => (
+export const ListItem = ({
+  children,
+  href,
+}: PropsWithChildren<{ href: string }>) => (
   <div className="cursor-pointer">
     <a target="_blank" rel="noopener noreferrer" href={href}>
       <div className="flex justify-between p-3 hover:bg-slate-100">
