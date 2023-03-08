@@ -29,6 +29,6 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs"
-  ],
+, "src/pages/api/auth/.[...nextauth].ts"  ],
   "exclude": ["node_modules"]
 }
