@@ -24,7 +24,7 @@ export const getDomainCompletions = async (idea: string): Promise<string> => {
       {
         role: "system",
         content:
-          "You are a brand naming expert. Given a business or product idea, you will respond only with a list 10 of domain names. Suggestions must match the core ideas presented. Use a variety of top-level-domains. Use domain hacks sometimes.",
+          "You are a brand naming expert. Given a business or product idea, you will respond only with a list 10 of domain names. Suggestions must match the core ideas presented. Use relevant top level domains. Use domain hacks sometimes.",
       },
       { role: "user", content: idea },
     ],

@@ -1,5 +1,6 @@
 import { ArrowRight, ChevronRight, Loader2 } from "lucide-react";
 import { type NextPage } from "next";
+import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 
 import { Layout } from "~/components/layout";
@@ -12,6 +13,7 @@ import { api } from "~/utils/api";
 const MIN_IDEA_LENGTH = 25;
 
 const Home: NextPage = () => {
+  const router = useRouter();
   const suggestions = api.suggestions.list.useMutation();
   const [ideasInputText, setIdeaInputText] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -60,13 +62,19 @@ const Home: NextPage = () => {
               )}
             </Button>
             {suggestions.data && !suggestions.isLoading ? (
-              <div className="animate-fade-in rounded-md border px-3">
+              <div className="animate-fade-in rounded-md border">
                 {suggestions.data.map((suggestion, index) => (
-                  <div key={suggestion}>
-                    <div className="my-3 flex justify-between">
-                      <p className="">{suggestion}</p>
-                      <ChevronRight />
-                    </div>
+                  <div key={suggestion} className="cursor-pointer">
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={`https://porkbun.com/checkout/search?q=${suggestion}`}
+                    >
+                      <div className="flex justify-between p-3 hover:opacity-70">
+                        <p className="">{suggestion}</p>
+                        <ChevronRight />
+                      </div>
+                    </a>
                     {index < suggestions.data.length - 1 ? <Separator /> : null}
                   </div>
                 ))}
