@@ -1,5 +1,5 @@
 import { type NextPage } from "next";
-import { IdeaInput } from "~/components/IdeaInput";
+import { IdeaInput } from "~/components/idea-input";
 
 import { Layout } from "~/components/layout";
 import { SuggestionsList } from "~/components/suggestions-list";
