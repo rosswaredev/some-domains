@@ -1,18 +1,3 @@
-const CREATION_VERBS = [
-  "building",
-  "creating",
-  "designing",
-  "developing",
-  "making",
-];
-const IDEA_TYPES = [
-  "an app",
-  "a website",
-  "a product",
-  "a service",
-  "a tool",
-  "a platform",
-];
 const PLACEHOLDER_IDEAS = [
   "Snore detector pillowcase for better sleep",
   "AI-powered wardrobe planner for fashionistas",
@@ -57,21 +42,10 @@ const getRandom = (arr: string[]): string => {
   return item ?? "";
 };
 
-const getRandomPartialIdea = () =>
-  `I'm ${getRandom(CREATION_VERBS)} ${getRandom(IDEA_TYPES)}...`;
-
-const getRandomCompleteIdea = (previousIdea?: string) => {
-  console.log("getRandomCompleteIdea");
+export const getRandomPlaceholder = (previousIdea?: string) => {
   let idea = getRandom(PLACEHOLDER_IDEAS);
-  console.log("initial", idea);
   while (idea === previousIdea) {
     idea = getRandom(PLACEHOLDER_IDEAS);
   }
-  return idea;
-};
-
-export const getRandomPlaceholder = (previousIdea?: string) => {
-  if (Math.random() < 0.3) return getRandomPartialIdea();
-
-  return getRandomCompleteIdea(previousIdea);
+  return `${idea}...`;
 };
